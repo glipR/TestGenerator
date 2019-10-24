@@ -7,8 +7,8 @@
       right
     >
       <h2 style="text-align: center">Current Configuration</h2>
-      <v-list>
-
+      <v-list :key="generator_object.full">
+        {{ generator_object }}
       </v-list>
     </v-navigation-drawer>
 
@@ -27,9 +27,10 @@
       v-model="drawerL"
       app
     >
-      <v-list dense>
-
-      </v-list>
+      <Container
+        :current_generator="current_object"
+        :global_generator="generator_object"
+      />
     </v-navigation-drawer>
 
     <v-content>
@@ -53,17 +54,32 @@
 
 <script>
 import Integer from './Options/Integer';
+import Container from './ListElements/Container';
 
 export default {
   props: {
     source: String
   },
   components: {
-    Integer
+    Integer,
+    Container
   },
   data: () => ({
+    generator_object: {
+      full: false
+    },
+    keys: [],
     drawerL: null,
     drawerR: true,
-  })
+  }),
+  computed: {
+    current_object() {
+      var cur_obj = this.generator_object;
+      for (let key of this.keys) {
+        cur_obj = cur_obj[key];
+      }
+      return cur_obj;
+    }
+  }
 }
 </script>
