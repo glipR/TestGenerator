@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import Integer from '../Options/Integer';
 export default {
     props: {
         current_generator: Object,
@@ -21,7 +22,7 @@ export default {
     data: () => ({
         options: [
             { name: "Collection" },
-            { name: "Integer" },
+            { name: "Integer", component: Integer },
             { name: "Float" },
             { name: "String" },
             { name: "Graph" }
@@ -29,7 +30,7 @@ export default {
     }),
     methods: {
         setSelected(option) {
-            this.current_generator.element = option.name;
+            this.current_generator.element = option;
             this.global_generator.full = true;
             setTimeout(() => { this.global_generator.full = false; })
         }
