@@ -1,12 +1,13 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
-      v-model="drawerRight"
+      v-model="drawerR"
       app
       clipped
       right
     >
-      <v-list dense>
+      <h2 style="text-align: center">Current Configuration</h2>
+      <v-list>
 
       </v-list>
     </v-navigation-drawer>
@@ -16,14 +17,14 @@
       clipped-right
       dark
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="drawerL = !drawerL"></v-app-bar-nav-icon>
       <v-toolbar-title>Test Generator</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-app-bar-nav-icon @click.stop="drawerRight = !drawerRight"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="drawerR = !drawerR"></v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-navigation-drawer
-      v-model="drawer"
+      v-model="drawerL"
       app
     >
       <v-list dense>
@@ -62,8 +63,8 @@ export default {
     source: String
   },
   data: () => ({
-    drawer: null,
-    drawerRight: null,
+    drawerL: null,
+    drawerR: true,
   })
 }
 </script>
