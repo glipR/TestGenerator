@@ -6,11 +6,25 @@
     <v-container>
         <v-row>
             <v-col md6 xs12>
-                <v-select
-                    :items="charSetOptions"
-                    v-model="charSet"
-                    label="Character set"
-                ></v-select>
+                <v-row>
+                    <v-col xs6>
+                        <v-row>
+                            <v-col>
+                                <v-text-field dense label="Size" v-model="stringSize" type="number"></v-text-field>
+                            </v-col>
+                            <v-col>
+                                <v-btn color="primary">Variable size</v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                    <v-col xs6>
+                        <v-select
+                            :items="charSetOptions"
+                            v-model="charSet"
+                            label="Character set"
+                        ></v-select>
+                    </v-col>
+                </v-row>
             </v-col>
             <v-col md6 xs12>
                 <v-select
