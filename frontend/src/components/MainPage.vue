@@ -37,13 +37,7 @@
         class="fill-height"
         fluid
       >
-        <v-row
-          justify="center"
-          align="center"
-        >
-          <v-col class="shrink">
-          </v-col>
-        </v-row>
+        <Integer />
       </v-container>
     </v-content>
 
@@ -58,9 +52,14 @@
 </template>
 
 <script>
+import Integer from './Options/Integer';
+
 export default {
   props: {
     source: String
+  },
+  components: {
+    Integer
   },
   data: () => ({
     drawerL: null,
