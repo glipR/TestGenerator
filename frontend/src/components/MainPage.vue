@@ -38,7 +38,7 @@
         class="fill-height"
         fluid
       >
-        <div :is="get_component" :cur_obj="current_object"></div>
+        <div :is="get_component" :cur_obj="current_object" :keys="keys"></div>
       </v-container>
     </v-content>
 
@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import Integer from './Options/Integer';
 import Container from './ListElements/Container';
 
 export default {
@@ -61,25 +60,24 @@ export default {
     source: String
   },
   components: {
-    Integer,
     Container
   },
   data: () => ({
-    generator_object: {},
+    generator_object: { element: {} },
     keys: [],
     drawerL: null,
     drawerR: true,
   }),
   computed: {
     current_object() {
-      var cur_obj = this.generator_object;
+      var cur_obj = this.generator_object.element;
       for (let key of this.keys) {
-        cur_obj = cur_obj[key];
+        cur_obj = cur_obj[key].element;
       }
       return cur_obj;
     },
     get_component() {
-      return this.current_object.element ? this.current_object.element.component : null;
+      return this.current_object ? this.current_object.component : null;
     }
   }
 }

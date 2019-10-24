@@ -13,7 +13,7 @@
                                 <v-text-field dense label="Size" v-model="stringSize" type="number"></v-text-field>
                             </v-col>
                             <v-col>
-                                <v-btn color="primary">Variable size</v-btn>
+                                <v-btn @click="VariableSize()" color="primary">Variable size</v-btn>
                             </v-col>
                         </v-row>
                     </v-col>
@@ -40,9 +40,12 @@
 </template>
 
 <script>
+import Integer from './Integer';
+
 export default {
     props: {
-        cur_obj: Object
+        cur_obj: Object,
+        keys: Array
     },
     data: () => ({
         charSet: 'Lowercase Letters',
@@ -58,11 +61,21 @@ export default {
             'Increasing',
             'Decreasing',
             'Unique Chars'
-        ]
+        ],
+        stringSize: 8
     }),
     created() {
         this.$set(this.cur_obj, 'charSet', this.charSet);
+        this.$set(this.cur_obj, 'charSet', this.charSet);
         this.$set(this.cur_obj, 'constraint', this.constraint);
+        if (!this.cur_obj.stringSize)
+            this.$set(this.cur_obj, 'stringSize', this.stringSize);
+    },
+    methods: {
+        VariableSize() {
+            this.$set(this.cur_obj, 'stringSize', { element: { name: "Integer", component: Integer } });
+            this.keys.push('stringSize');
+        }
     },
     watch: {
         charSet() {

@@ -33,7 +33,8 @@ export default {
     }),
     methods: {
         setSelected(option) {
-            this.$set(this.current_generator, 'element', option);
+            for (let key of Object.keys(option))
+                this.$set(this.current_generator, key, option[key]);
         }
     }
 }
