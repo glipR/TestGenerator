@@ -1,21 +1,21 @@
 <template>
 <v-card width="100%">
     <v-card-title primary-title>
-        Customise Integer
+        Customise String
     </v-card-title>
     <v-container>
         <v-row>
             <v-col md6 xs12>
                 <v-select
                     :items="charSetOptions"
-                    :value="charSet"
+                    v-model="charSet"
                     label="Character set"
                 ></v-select>
             </v-col>
             <v-col md6 xs12>
                 <v-select
                     :items="constraintOptions"
-                    :value="constraint"
+                    v-model="constraint"
                     label="Constraints"
                     multiple
                 ></v-select>
@@ -27,6 +27,9 @@
 
 <script>
 export default {
+    props: {
+        cur_obj: Object
+    },
     data: () => ({
         charSet: 'Lowercase Letters',
         charSetOptions: [
@@ -42,6 +45,18 @@ export default {
             'Decreasing',
             'Unique Chars'
         ]
-    })
+    }),
+    created() {
+        this.$set(this.cur_obj, 'charSet', this.charSet);
+        this.$set(this.cur_obj, 'constraint', this.constraint);
+    },
+    watch: {
+        charSet() {
+            this.$set(this.cur_obj, 'charSet', this.charSet);
+        },
+        constraint() {
+            this.$set(this.cur_obj, 'constraint', this.constraint);
+        }
+    }
 }
 </script>

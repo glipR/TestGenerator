@@ -38,7 +38,7 @@
         class="fill-height"
         fluid
       >
-        <div :is="get_component"></div>
+        <div :is="get_component" :cur_obj="current_object"></div>
       </v-container>
     </v-content>
 

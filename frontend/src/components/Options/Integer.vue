@@ -28,10 +28,29 @@
 
 <script>
 export default {
+    props: {
+        cur_obj: Object
+    },
     data: () => ({
         lowerBound: 0,
         upperBound: 1000,
         isPrime: false
-    })
+    }),
+    created() {
+        this.$set(this.cur_obj, 'lowerBound', this.lowerBound);
+        this.$set(this.cur_obj, 'upperBound', this.upperBound);
+        this.$set(this.cur_obj, 'isPrime', this.isPrime);
+    },
+    watch: {
+        lowerBound() {
+            this.$set(this.cur_obj, 'lowerBound', this.lowerBound);
+        },
+        upperBound() {
+            this.$set(this.cur_obj, 'upperBound', this.upperBound);
+        },
+        isPrime() {
+            this.$set(this.cur_obj, 'isPrime', this.isPrime);
+        }
+    }
 }
 </script>

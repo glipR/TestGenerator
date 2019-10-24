@@ -28,10 +28,29 @@
 
 <script>
 export default {
+    props: {
+        cur_obj: Object
+    },
     data: () => ({
         lowerBound: 0,
         upperBound: 100,
         precision: 3,
-    })
+    }),
+    created() {
+        this.$set(this.cur_obj, 'lowerBound', this.lowerBound);
+        this.$set(this.cur_obj, 'upperBound', this.upperBound);
+        this.$set(this.cur_obj, 'precision', this.precision);
+    },
+    watch: {
+        lowerBound() {
+            this.$set(this.cur_obj, 'lowerBound', this.lowerBound);
+        },
+        upperBound() {
+            this.$set(this.cur_obj, 'upperBound', this.upperBound);
+        },
+        precision() {
+            this.$set(this.cur_obj, 'precision', this.precision);
+        }
+    }
 }
 </script>
