@@ -15,6 +15,7 @@
 <script>
 import Integer from '../Options/Integer';
 import Float from '../Options/Float';
+import String from '../Options/String';
 
 export default {
     props: {
@@ -26,7 +27,7 @@ export default {
             { name: "Collection" },
             { name: "Integer", component: Integer },
             { name: "Float", component: Float },
-            { name: "String" },
+            { name: "String", component: String },
             { name: "Graph" }
         ]
     }),
