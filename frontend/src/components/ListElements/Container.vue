@@ -14,6 +14,8 @@
 
 <script>
 import Integer from '../Options/Integer';
+import Float from '../Options/Float';
+
 export default {
     props: {
         current_generator: Object,
@@ -23,16 +25,14 @@ export default {
         options: [
             { name: "Collection" },
             { name: "Integer", component: Integer },
-            { name: "Float" },
+            { name: "Float", component: Float },
             { name: "String" },
             { name: "Graph" }
         ]
     }),
     methods: {
         setSelected(option) {
-            this.current_generator.element = option;
-            this.global_generator.full = true;
-            setTimeout(() => { this.global_generator.full = false; })
+            this.$set(this.current_generator, 'element', option);
         }
     }
 }

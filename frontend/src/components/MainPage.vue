@@ -7,7 +7,7 @@
       right
     >
       <h2 style="text-align: center">Current Configuration</h2>
-      <v-list :key="generator_object.full">
+      <v-list>
         {{ generator_object }}
       </v-list>
     </v-navigation-drawer>
@@ -38,7 +38,7 @@
         class="fill-height"
         fluid
       >
-        <div :is="current_object.element.component"></div>
+        <div :is="get_component"></div>
       </v-container>
     </v-content>
 
@@ -65,9 +65,7 @@ export default {
     Container
   },
   data: () => ({
-    generator_object: {
-      full: false
-    },
+    generator_object: {},
     keys: [],
     drawerL: null,
     drawerR: true,
@@ -79,6 +77,9 @@ export default {
         cur_obj = cur_obj[key];
       }
       return cur_obj;
+    },
+    get_component() {
+      return this.current_object.element ? this.current_object.element.component : null;
     }
   }
 }
