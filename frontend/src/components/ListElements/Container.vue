@@ -16,6 +16,7 @@
 import Integer from '../Options/Integer';
 import Float from '../Options/Float';
 import String from '../Options/String';
+import Graph from '../Options/Graph';
 
 export default {
     props: {
@@ -28,7 +29,7 @@ export default {
             { name: "Integer", component: Integer },
             { name: "Float", component: Float },
             { name: "String", component: String },
-            { name: "Graph" }
+            { name: "Graph", component: Graph }
         ]
     }),
     methods: {
