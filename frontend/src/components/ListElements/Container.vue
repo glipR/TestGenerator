@@ -1,7 +1,7 @@
 <template>
     <v-list dense>
         <v-list-item
-            v-for="option in options"
+            v-for="option in availableOptions"
             :key="option.name"
             @click="setSelected(option)"
         >
@@ -35,6 +35,16 @@ export default {
         setSelected(option) {
             for (let key of Object.keys(option))
                 this.$set(this.current_generator, key, option[key]);
+        }
+    },
+    computed: {
+        availableOptions() {
+            var result = [];
+            for (let o of this.options) {
+                if (!this.current_generator.options || this.current_generator.options.includes(o.name))
+                    result.push(o);
+            }
+            return result;
         }
     }
 }

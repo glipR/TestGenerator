@@ -73,7 +73,7 @@ export default {
     },
     methods: {
         VariableSize() {
-            this.$set(this.cur_obj, 'stringSize', { element: { name: "Integer", component: Integer } });
+            this.$set(this.cur_obj, 'stringSize', { element: { name: "Integer", component: Integer, options: ["Integer"] } });
             this.keys.push('stringSize');
         }
     },
