@@ -83,7 +83,10 @@ export default {
         },
         constraint() {
             this.$set(this.cur_obj, 'constraint', this.constraint);
-        }
+        },
+        stringSize() {
+            this.$set(this.cur_obj, 'stringSize', this.stringSize);
+        },
     }
 }
 </script>
