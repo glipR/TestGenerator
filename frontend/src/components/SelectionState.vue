@@ -4,6 +4,7 @@
             v-for="(obj, index) in getObjectsWithIndentation"
             :key="index"
             @click="setCurrent(obj)"
+            :class="{ 'selected': selected(obj) }"
         >
             <v-list-item-content>
                 {{ obj[0].name }}, {{ obj[1] }}, {{ obj[2] }}
@@ -36,6 +37,11 @@ export default {
         },
         setCurrent(object) {
             serverBus.$emit('setKeys', object[2]);
+        },
+        selected(object) {
+            if (object[2].length != this.selected_keys.length) return false;
+            for (let i=0; i<object[2].length; i++) if (object[2][i] != this.selected_keys[i]) return false;
+            return true;
         }
     },
     computed: {
@@ -45,3 +51,10 @@ export default {
     }
 }
 </script>
+<style scoped>
+.selected {
+    background: #00ff0030;
+    border-bottom: 3px green solid;
+    border-radius: 10px;
+}
+</style>
