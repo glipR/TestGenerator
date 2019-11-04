@@ -97,6 +97,9 @@ export default {
   created() {
     serverBus.$on('setKeys', (keys) => {
       this.keys = keys;
+    }),
+    serverBus.$on('editEnable', () => {
+      this.generated = false;
     })
   },
   methods: {

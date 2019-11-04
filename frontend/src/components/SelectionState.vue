@@ -37,6 +37,7 @@ export default {
         },
         setCurrent(object) {
             serverBus.$emit('setKeys', object[2]);
+            serverBus.$emit('editEnable');
         },
         selected(object) {
             if (object[2].length != this.selected_keys.length) return false;

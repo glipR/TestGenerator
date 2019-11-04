@@ -17,6 +17,7 @@ import Integer from '../Options/Integer';
 import Float from '../Options/Float';
 import String from '../Options/String';
 import Graph from '../Options/Graph';
+import { serverBus } from '../../main';
 
 export default {
     props: {
@@ -36,6 +37,7 @@ export default {
         setSelected(option) {
             for (let key of Object.keys(option))
                 this.$set(this.current_generator, key, option[key]);
+            serverBus.$emit('editEnable');
         }
     },
     computed: {
