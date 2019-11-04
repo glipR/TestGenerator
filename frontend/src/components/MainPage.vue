@@ -21,6 +21,7 @@
       <v-app-bar-nav-icon @click.stop="drawerL = !drawerL"></v-app-bar-nav-icon>
       <v-toolbar-title>Test Generator</v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn color="success" @click="generate">Generate</v-btn>
       <v-app-bar-nav-icon @click.stop="drawerR = !drawerR"></v-app-bar-nav-icon>
     </v-app-bar>
 
@@ -39,7 +40,11 @@
         class="fill-height"
         fluid
       >
-        <div :is="get_component" :cur_obj="current_object" :keys="keys"></div>
+        <div :is="get_component" :cur_obj="current_object" :keys="keys" v-if="!generated"></div>
+        <Results
+          :content="generatorResult"
+          v-else
+        />
       </v-container>
     </v-content>
 
@@ -56,6 +61,8 @@
 <script>
 import Container from './ListElements/Container';
 import SelectionState from './SelectionState';
+import Results from './Results';
+import { generate } from '../generate';
 import { serverBus } from '../main';
 
 export default {
@@ -64,13 +71,16 @@ export default {
   },
   components: {
     Container,
-    SelectionState
+    SelectionState,
+    Results
   },
   data: () => ({
     generator_object: { element: {} },
     keys: [],
     drawerL: null,
     drawerR: true,
+    generated: false,
+    generatorResult: null
   }),
   computed: {
     current_object() {
@@ -88,6 +98,12 @@ export default {
     serverBus.$on('setKeys', (keys) => {
       this.keys = keys;
     })
+  },
+  methods: {
+    generate() {
+      this.generated = true;
+      this.generatorResult = generate(this.generator_object);
+    }
   }
 }
 </script>
