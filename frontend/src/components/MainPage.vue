@@ -7,6 +7,7 @@
       right
     >
       <h2 style="text-align: center">Current Configuration</h2>
+      <SelectionState :total_generator="generator_object" :selected_keys="keys" />
       <v-list>
         {{ generator_object }}
       </v-list>
@@ -54,13 +55,16 @@
 
 <script>
 import Container from './ListElements/Container';
+import SelectionState from './SelectionState';
+import { serverBus } from '../main';
 
 export default {
   props: {
     source: String
   },
   components: {
-    Container
+    Container,
+    SelectionState
   },
   data: () => ({
     generator_object: { element: {} },
@@ -79,6 +83,11 @@ export default {
     get_component() {
       return this.current_object ? this.current_object.component : null;
     }
+  },
+  created() {
+    serverBus.$on('setKeys', (keys) => {
+      this.keys = keys;
+    })
   }
 }
 </script>

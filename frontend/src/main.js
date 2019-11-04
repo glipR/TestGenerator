@@ -3,6 +3,8 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import VueMathjax from 'vue-mathjax'
 
+export const serverBus = new Vue();
+
 Vue.use(VueMathjax)
 Vue.config.productionTip = false
 
