@@ -61,6 +61,22 @@ export default {
             this.$set(this.cur_obj, 'graphEdges', this.graphEdges);
         else
             this.graphEdges = this.cur_obj.graphEdges;
+        if (this.cur_obj.isTree == undefined)
+            this.$set(this.cur_obj, 'isTree', this.isTree);
+        else
+            this.isTree = this.cur_obj.isTree;
+        if (this.cur_obj.isConnected == undefined)
+            this.$set(this.cur_obj, 'isConnected', this.isConnected);
+        else
+            this.isConnected = this.cur_obj.isConnected;
+        if (this.cur_obj.isVertexWeighted == undefined)
+            this.$set(this.cur_obj, 'isVertexWeighted', this.isVertexWeighted);
+        else
+            this.isVertexWeighted = this.cur_obj.isVertexWeighted;
+        if (this.cur_obj.isEdgeWeighted == undefined)
+            this.$set(this.cur_obj, 'isEdgeWeighted', this.isEdgeWeighted);
+        else
+            this.isEdgeWeighted = this.cur_obj.isEdgeWeighted;
     },
     methods: {
         variableVertices() {
