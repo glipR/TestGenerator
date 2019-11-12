@@ -35,6 +35,7 @@ export default {
     }),
     methods: {
         setSelected(option) {
+            for (let key of Object.keys(this.current_generator)) this.$delete(this.current_generator, key);
             for (let key of Object.keys(option))
                 this.$set(this.current_generator, key, option[key]);
             serverBus.$emit('editEnable');
