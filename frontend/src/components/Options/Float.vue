@@ -37,9 +37,18 @@ export default {
         precision: 3,
     }),
     created() {
-        this.$set(this.cur_obj, 'lowerBound', this.lowerBound);
-        this.$set(this.cur_obj, 'upperBound', this.upperBound);
-        this.$set(this.cur_obj, 'precision', this.precision);
+        if (this.cur_obj.lowerBound == undefined)
+            this.$set(this.cur_obj, 'lowerBound', this.lowerBound);
+        else
+            this.lowerBound = this.cur_obj.lowerBound;
+        if (this.cur_obj.upperBound == undefined)
+            this.$set(this.cur_obj, 'upperBound', this.upperBound);
+        else
+            this.upperBound = this.cur_obj.upperBound;
+        if (this.cur_obj.precision == undefined)
+            this.$set(this.cur_obj, 'precision', this.precision);
+        else
+            this.precision = this.cur_obj.precision;
     },
     watch: {
         lowerBound() {

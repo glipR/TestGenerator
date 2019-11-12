@@ -65,11 +65,18 @@ export default {
         stringSize: 8
     }),
     created() {
-        this.$set(this.cur_obj, 'charSet', this.charSet);
-        this.$set(this.cur_obj, 'charSet', this.charSet);
-        this.$set(this.cur_obj, 'constraint', this.constraint);
-        if (!this.cur_obj.stringSize)
+        if (this.cur_obj.charSet == undefined)
+            this.$set(this.cur_obj, 'charSet', this.charSet);
+        else
+            this.charSet = this.cur_obj.charSet;
+        if (this.cur_obj.constraint == undefined)
+            this.$set(this.cur_obj, 'constraint', this.constraint);
+        else
+            this.constraint = this.cur_obj.constraint;
+        if (this.cur_obj.stringSize == undefined)
             this.$set(this.cur_obj, 'stringSize', this.stringSize);
+        else
+            this.stringSize = this.cur_obj.stringSize;
     },
     methods: {
         VariableSize() {

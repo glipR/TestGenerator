@@ -53,10 +53,14 @@ export default {
         isEdgeWeighted: false
     }),
     created() {
-        if (!this.cur_obj.graphVertices)
+        if (this.cur_obj.graphVertices == undefined)
             this.$set(this.cur_obj, 'graphVertices', this.graphVertices);
-        if (!this.cur_obj.graphEdges)
-            this.$set(this.cur_obj, 'graphEdges', this.graphVertices);
+        else
+            this.graphVertices = this.cur_obj.graphVertices;
+        if (this.cur_obj.graphEdges == undefined)
+            this.$set(this.cur_obj, 'graphEdges', this.graphEdges);
+        else
+            this.graphEdges = this.cur_obj.graphEdges;
     },
     methods: {
         variableVertices() {

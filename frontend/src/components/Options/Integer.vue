@@ -37,9 +37,18 @@ export default {
         isPrime: false
     }),
     created() {
-        this.$set(this.cur_obj, 'lowerBound', this.lowerBound);
-        this.$set(this.cur_obj, 'upperBound', this.upperBound);
-        this.$set(this.cur_obj, 'isPrime', this.isPrime);
+        if (this.cur_obj.lowerBound == undefined)
+            this.$set(this.cur_obj, 'lowerBound', this.lowerBound);
+        else
+            this.lowerBound = this.cur_obj.lowerBound;
+        if (this.cur_obj.upperBound == undefined)
+            this.$set(this.cur_obj, 'upperBound', this.upperBound);
+        else
+            this.upperBound = this.cur_obj.upperBound;
+        if (this.cur_obj.isPrime == undefined)
+            this.$set(this.cur_obj, 'isPrime', this.isPrime);
+        else
+            this.isPrime = this.cur_obj.isPrime;
     },
     watch: {
         lowerBound() {
