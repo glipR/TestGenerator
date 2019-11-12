@@ -18,11 +18,11 @@ const generateInteger = (options) => {
                 sieve[current] = false;
                 current += x;
             }
-            let primes = [];
-            for (let i=0; i<options.upperBound; i++) if (sieve[i] && i >= options.lowerBound) primes.push(i);
-            return primes[Math.floor(Math.random() * primes.length)];
         }
+        let primes = [];
+        for (let i=0; i<options.upperBound; i++) if (sieve[i] && i >= options.lowerBound) primes.push(i);
+        return primes[Math.floor(Math.random() * primes.length)];
     } else {
-        return Math.round(options.lowerBound - 0.5 + Math.random() * (options.upperBound - options.lowerBound + 0.5));
+        return Math.round(options.lowerBound - 0.5 + Math.random() * (options.upperBound - options.lowerBound + 1));
     }
 }
