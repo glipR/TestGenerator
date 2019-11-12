@@ -4,6 +4,8 @@ export const generate = (obj) => {
     }
     else if (obj.element.name == "Float") {
         return generateFloat(obj.element);
+    } else if (obj.element.name == "String") {
+        return generateString(obj.element);
     }
     return obj;
 }
@@ -35,4 +37,29 @@ const generateFloat = (options) => {
     let upper = Math.floor(options.upperBound * Math.pow(10, options.precision));
     let num = Math.round(lower - 0.5 + Math.random() * (upper - lower + 1));
     return num / Math.pow(10, options.precision);
+}
+
+const getAlphabet = (set_name) => {
+    let alph = "abcdefghijklmnopqrstuvwxyz";
+    if (set_name == "Lowercase Letters") {
+        return alph.toLowerCase();
+    } else if (set_name == "Uppercase Letters") {
+        return alph.toUpperCase();
+    } else if (set_name == "Letters") {
+        return alph.toLowerCase() + alph.toUpperCase();
+    }
+    return "";
+}
+
+const generateString = (options) => {
+    let alph = getAlphabet(options.charSet);
+    let stringSize = options.stringSize;
+    if (typeof(stringSize) == "object") {
+        stringSize = generateInteger(options.stringSize.element);
+    }
+    let result = "";
+    for (let i=0; i<stringSize; i++) {
+        result = result + alph[Math.floor(Math.random() * alph.length)];
+    }
+    return result;
 }
