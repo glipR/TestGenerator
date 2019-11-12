@@ -9,7 +9,7 @@
                 <v-row>
                     <v-row>
                         <v-col>
-                            <v-text-field dense label="Vertices" v-model="graphVertices" type="number"></v-text-field>
+                            <v-text-field dense label="Vertices" v-model="graphVertices"></v-text-field>
                         </v-col>
                         <v-col>
                             <v-btn @click="variableVertices()" color="primary">Variable Vertices</v-btn>
@@ -17,7 +17,7 @@
                     </v-row>
                     <v-row>
                         <v-col>
-                            <v-text-field dense label="Edges" v-model="graphEdges" type="number"></v-text-field>
+                            <v-text-field dense label="Edges" v-model="graphEdges"></v-text-field>
                         </v-col>
                         <v-col>
                             <v-btn @click="variableEdges()" color="primary">Variable Edges</v-btn>
@@ -118,6 +118,10 @@ export default {
         },
         isTree() {
             this.$set(this.cur_obj, 'isTree', this.isTree);
+            if (this.isTree) {
+                this.isConnected = true;
+                this.graphEdges = "NV - 1";
+            }
         },
         isConnected() {
             this.$set(this.cur_obj, 'isConnected', this.isConnected);
