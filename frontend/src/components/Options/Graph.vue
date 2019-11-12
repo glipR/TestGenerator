@@ -24,6 +24,23 @@
                         </v-col>
                     </v-row>
                 </v-row>
+                <v-textarea label="Output Format" v-model="formatString"></v-textarea>
+                <v-row>
+                    <v-col><v-text-field box label="Vertex Format" v-model="vertexFormat"></v-text-field></v-col>
+                    <v-col><v-select
+                        :items="separatorOptions"
+                        v-model="vertexSeparator"
+                        label="Vertex Separator"
+                    ></v-select></v-col>
+                </v-row>
+                <v-row>
+                    <v-col><v-text-field box label="Edge Format" v-model="edgeFormat"></v-text-field></v-col>
+                    <v-col><v-select
+                        :items="separatorOptions"
+                        v-model="edgeSeparator"
+                        label="Edge Separator"
+                    ></v-select></v-col>
+                </v-row>
             </v-col>
             <v-col md6 xs12>
                 <v-checkbox label="Tree" v-model="isTree"></v-checkbox>
@@ -50,33 +67,37 @@ export default {
         isTree: false,
         isConnected: true,
         isVertexWeighted: false,
-        isEdgeWeighted: false
+        isEdgeWeighted: true,
+        formatString: "NV NE\nV\nE",
+        vertexFormat: "v",
+        vertexSeparator: "Space",
+        edgeFormat: "v1 v2 w",
+        edgeSeparator: "Newline",
+        separatorOptions: [
+            'Tab',
+            'Space',
+            'Newline'
+        ]
     }),
     created() {
-        if (this.cur_obj.graphVertices == undefined)
-            this.$set(this.cur_obj, 'graphVertices', this.graphVertices);
-        else
-            this.graphVertices = this.cur_obj.graphVertices;
-        if (this.cur_obj.graphEdges == undefined)
-            this.$set(this.cur_obj, 'graphEdges', this.graphEdges);
-        else
-            this.graphEdges = this.cur_obj.graphEdges;
-        if (this.cur_obj.isTree == undefined)
-            this.$set(this.cur_obj, 'isTree', this.isTree);
-        else
-            this.isTree = this.cur_obj.isTree;
-        if (this.cur_obj.isConnected == undefined)
-            this.$set(this.cur_obj, 'isConnected', this.isConnected);
-        else
-            this.isConnected = this.cur_obj.isConnected;
-        if (this.cur_obj.isVertexWeighted == undefined)
-            this.$set(this.cur_obj, 'isVertexWeighted', this.isVertexWeighted);
-        else
-            this.isVertexWeighted = this.cur_obj.isVertexWeighted;
-        if (this.cur_obj.isEdgeWeighted == undefined)
-            this.$set(this.cur_obj, 'isEdgeWeighted', this.isEdgeWeighted);
-        else
-            this.isEdgeWeighted = this.cur_obj.isEdgeWeighted;
+        for (let key of [
+            'graphVertices',
+            'graphEdges',
+            'isTree',
+            'isConnected',
+            'isVertexWeighted',
+            'isEdgeWeighted',
+            'formatString',
+            'vertexFormat',
+            'vertexSeparator',
+            'edgeFormat',
+            'edgeSeparator'
+        ]) {
+            if (this.cur_obj[key] == undefined)
+                this.$set(this.cur_obj, key, this[key]);
+            else
+                this[key] = this.cur_obj[key];
+        }
     },
     methods: {
         variableVertices() {
@@ -106,6 +127,21 @@ export default {
         },
         isEdgeWeighted() {
             this.$set(this.cur_obj, 'isEdgeWeighted', this.isEdgeWeighted);
+        },
+        formatString() {
+            this.$set(this.cur_obj, 'formatString', this.formatString);
+        },
+        vertexFormat() {
+            this.$set(this.cur_obj, 'vertexFormat', this.vertexFormat);
+        },
+        vertexSeparator() {
+            this.$set(this.cur_obj, 'vertexSeparator', this.vertexSeparator);
+        },
+        edgeFormat() {
+            this.$set(this.cur_obj, 'edgeFormat', this.edgeFormat);
+        },
+        edgeSeparator() {
+            this.$set(this.cur_obj, 'edgeSeparator', this.edgeSeparator);
         }
     }
 }
