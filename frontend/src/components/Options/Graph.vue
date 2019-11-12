@@ -26,7 +26,7 @@
                 </v-row>
                 <v-textarea label="Output Format" v-model="formatString"></v-textarea>
                 <v-row>
-                    <v-col><v-text-field box label="Vertex Format" v-model="vertexFormat"></v-text-field></v-col>
+                    <v-col><v-text-field filled label="Vertex Format" v-model="vertexFormat"></v-text-field></v-col>
                     <v-col><v-select
                         :items="separatorOptions"
                         v-model="vertexSeparator"
@@ -34,7 +34,7 @@
                     ></v-select></v-col>
                 </v-row>
                 <v-row>
-                    <v-col><v-text-field box label="Edge Format" v-model="edgeFormat"></v-text-field></v-col>
+                    <v-col><v-text-field filled label="Edge Format" v-model="edgeFormat"></v-text-field></v-col>
                     <v-col><v-select
                         :items="separatorOptions"
                         v-model="edgeSeparator"
