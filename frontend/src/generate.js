@@ -6,6 +6,8 @@ export const generate = (obj) => {
         return generateFloat(obj.element);
     } else if (obj.element.name == "String") {
         return generateString(obj.element);
+    } else if (obj.element.name == "Graph") {
+        return generateGraph(obj.element);
     }
     return obj;
 }
@@ -55,7 +57,9 @@ const generateString = (options) => {
     let alph = Array.from(getAlphabet(options.charSet));
     let stringSize = options.stringSize;
     if (typeof(stringSize) == "object") {
-        stringSize = generateInteger(options.stringSize.element);
+        stringSize = generate(stringSize);
+    } else {
+        stringSize = parseInt(stringSize);
     }
     let char_array = [];
     for (let i=0; i<stringSize; i++) {
@@ -73,4 +77,56 @@ const generateString = (options) => {
     let result = "";
     for (let c of char_array) result = result + c;
     return result;
+}
+
+// Taken from https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
+const shuffle = (a) => {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+// All graphs are generated in the backend with structure:
+/*
+{
+    vertices: {
+        "1": { weight: 2 },
+        "a": {}...
+    },
+    edges: [
+        { v1: "1", v2: "2", weight: 6 }
+    ]
+}
+*/
+const generateTree = (n_verts) => {
+    // First, designate 0 to be the root vertex, with everything else having a parent with less rank.
+    let parents = [-1];
+    for (let i=1; i<n_verts; i++) parents.push(Math.round(-0.5 + Math.random() * i));
+    // Then create a random shuffling of these vertices
+    let shuffled = shuffle(Array.from(Array(n_verts).keys()));
+    let graph = {
+        vertices: {},
+        edges: []
+    }
+    for (let i=0; i<n_verts; i++) {
+        graph.vertices[shuffled[i]] = {};
+        if (i != 0) graph.edges.push({ v1: shuffled[i], v2: shuffled[parents[i]] });
+    }
+    return graph;
+}
+
+const generateGraph = (options) => {
+    let num_verts = options.graphVertices;
+    if (typeof(stringSize) == "object") {
+        num_verts = generate(num_verts);
+    } else {
+        num_verts = parseInt(num_verts);
+    }
+    if (options.isTree) {
+        return generateTree(num_verts);
+    } else {
+        return options;
+    }
 }
