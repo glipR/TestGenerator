@@ -117,6 +117,14 @@ const generateTree = (n_verts) => {
     return graph;
 }
 
+const vertexToString = (options, label, info) => {
+    return options.vertexFormat.replace("v", label).replace("w", info.weight);
+}
+
+const edgeToString = (options, info) => {
+    return options.edgeFormat.replace("v1", info.v1).replace("v2", info.v2).replace("w", info.weight);
+}
+
 const generateGraph = (options) => {
     let num_verts = options.graphVertices;
     if (typeof(stringSize) == "object") {
@@ -124,9 +132,40 @@ const generateGraph = (options) => {
     } else {
         num_verts = parseInt(num_verts);
     }
+    let graph_obj = {};
     if (options.isTree) {
-        return generateTree(num_verts);
+        graph_obj = generateTree(num_verts);
     } else {
-        return options;
+        graph_obj = {};
     }
+    // Now, add the string representation.
+    let vertex_string = "";
+    let vertex_sep;
+    if (options.vertexSeparator == "Space") vertex_sep = " ";
+    if (options.vertexSeparator == "Tab") vertex_sep = "\t";
+    if (options.vertexSeparator == "Newline") vertex_sep = "\n";
+    for (let key of Object.keys(graph_obj.vertices)) {
+        vertex_string = vertex_string + vertexToString(options, key, graph_obj.vertices[key]);
+        vertex_string = vertex_string + vertex_sep;
+    }
+    vertex_string = vertex_string.substring(0, vertex_string.length - vertex_sep.length);
+    let edge_string = "";
+    let edge_sep;
+    if (options.edgeSeparator == "Space") edge_sep = " ";
+    if (options.edgeSeparator == "Tab") edge_sep = "\t";
+    if (options.edgeSeparator == "Newline") edge_sep = "\n";
+    for (let i=0; i<graph_obj.edges.length; i++) {
+        edge_string = edge_string + edgeToString(options, graph_obj.edges[i]);
+        edge_string = edge_string + edge_sep;
+    }
+    edge_string = edge_string.substring(0, edge_string.length - edge_sep.length);
+    graph_obj.result = (
+        options.formatString
+        .replace("NV", num_verts)
+        .replace("NE", graph_obj.edges.length)
+        .replace("V", vertex_string)
+        .replace("E", edge_string)
+    );
+
+    return graph_obj;
 }
