@@ -4,7 +4,8 @@
         Results
     </v-card-title>
     <v-container>
-        {{ content }}
+        <pre v-if="content.result"><code>{{content.result}}</code></pre>
+        <div>{{ content }}</div>
     </v-container>
 </v-card>
 </template>
