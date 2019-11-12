@@ -2,6 +2,9 @@ export const generate = (obj) => {
     if (obj.element.name == "Integer") {
         return generateInteger(obj.element);
     }
+    else if (obj.element.name == "Float") {
+        return generateFloat(obj.element);
+    }
     return obj;
 }
 
@@ -25,4 +28,11 @@ const generateInteger = (options) => {
     } else {
         return Math.round(options.lowerBound - 0.5 + Math.random() * (options.upperBound - options.lowerBound + 1));
     }
+}
+
+const generateFloat = (options) => {
+    let lower = Math.ceil(options.lowerBound * Math.pow(10, options.precision));
+    let upper = Math.floor(options.upperBound * Math.pow(10, options.precision));
+    let num = Math.round(lower - 0.5 + Math.random() * (upper - lower + 1));
+    return num / Math.pow(10, options.precision);
 }
