@@ -52,14 +52,25 @@ const getAlphabet = (set_name) => {
 }
 
 const generateString = (options) => {
-    let alph = getAlphabet(options.charSet);
+    let alph = Array.from(getAlphabet(options.charSet));
     let stringSize = options.stringSize;
     if (typeof(stringSize) == "object") {
         stringSize = generateInteger(options.stringSize.element);
     }
-    let result = "";
+    let char_array = [];
     for (let i=0; i<stringSize; i++) {
-        result = result + alph[Math.floor(Math.random() * alph.length)];
+        let num = Math.floor(Math.random() * alph.length);
+        char_array.push(alph[num]);
+        if (options.constraint.includes("Unique Chars"))
+            alph.splice(num, 1);
     }
+    if (options.constraint.includes("Decreasing")) {
+        char_array.sort();
+    } else if (options.constraint.includes("Increasing")) {
+        char_array.sort();
+        char_array.reverse();
+    }
+    let result = "";
+    for (let c of char_array) result = result + c;
     return result;
 }
