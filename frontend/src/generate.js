@@ -127,16 +127,99 @@ const edgeToString = (options, info) => {
 
 const generateGraph = (options) => {
     let num_verts = options.graphVertices;
-    if (typeof(stringSize) == "object") {
+    if (typeof(num_verts) == "object") {
         num_verts = generate(num_verts);
     } else {
         num_verts = parseInt(num_verts);
     }
-    let graph_obj = {};
+    let num_edges = options.graphEdges;
+    if (typeof(num_edges) == "object") {
+        num_edges = generate(num_edges);
+    } else {
+        num_edges = parseInt(num_edges);
+    }
+    let graph_obj = { vertices: {}, edges: [] };
+    let opts = options;
     if (options.isTree) {
         graph_obj = generateTree(num_verts);
     } else {
-        graph_obj = {};
+        let intermediate_obj = { vertices: {}, edges: [] };
+        // Generate trees for each component, and then add edges among components.
+        let num_comps = opts.graphComponents;
+        if (typeof(num_comps) == "object") {
+            num_comps = generate(num_comps);
+        } else {
+            num_comps = parseInt(num_comps);
+        }
+        let comp_array = [ -1 ];
+        let options = Array.from(Array(num_verts-1).keys());
+        for (let i=1; i<num_comps; i++) {
+            let num = Math.floor(Math.random() * options.length);
+            comp_array.push(options[num]);
+            options.splice(num, 1);
+        }
+        comp_array.sort();
+        comp_array.push(num_verts - 1);
+        let total = 0;
+        for (let i=1; i<comp_array.length; i++) {
+            let subtree = generateTree(comp_array[i] - comp_array[i-1]);
+            for (let key of Object.keys(subtree.vertices)) {
+                intermediate_obj.vertices[parseInt(key)+total] = subtree.vertices[key];
+            }
+            for (let edge of subtree.edges) {
+                edge.v1 = edge.v1 + total;
+                edge.v2 = edge.v2 + total;
+                intermediate_obj.edges.push(edge);
+            }
+            total += comp_array[i] - comp_array[i-1];
+        }
+        // Add extra edges
+        num_edges -= intermediate_obj.edges.length;
+        let connectivity = [];
+        let possible_neighbour_amounts = [];
+        total = 0;
+        for (let i=1; i<comp_array.length; i++) {
+            for (let j=total; j<total+comp_array[i] - comp_array[i-1]; j++)
+                possible_neighbour_amounts.push([comp_array[i] - comp_array[i-1] - 1, total]);
+            total += comp_array[i] - comp_array[i-1];
+        }
+        for (let i=0; i<num_verts; i++) connectivity.push([]);
+        for (let edge of intermediate_obj.edges) {
+            connectivity[edge.v1].push(edge.v2)
+            connectivity[edge.v2].push(edge.v1)
+        }
+        let remaining_double_edges = 0;
+        for (let i=0; i<num_verts; i++) {
+            remaining_double_edges += possible_neighbour_amounts[i][0];
+            remaining_double_edges -= connectivity[i].length;
+        }
+        for (let i=0; i<num_edges; i++) {
+            let rand = Math.floor(Math.random() * remaining_double_edges);
+            for (let j=0; j<num_verts; j++) {
+                if (rand > possible_neighbour_amounts[j][0] - connectivity[j].length || possible_neighbour_amounts[j][0] - connectivity[j].length == 0) {
+                    rand -= possible_neighbour_amounts[j][0] - connectivity[j].length;
+                    continue;
+                }
+                for (let k=possible_neighbour_amounts[j][1]; k<possible_neighbour_amounts[j][1] + possible_neighbour_amounts[j][0]+1; k++) {
+                    if (k != j && !connectivity[j].includes(k)) {
+                        intermediate_obj.edges.push({ v1: j, v2: k });
+                        connectivity[j].push(k);
+                        connectivity[k].push(j);
+                        remaining_double_edges -= 2;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        // Reshuffle the components.
+        let shuffled = shuffle(Array.from(Array(num_verts).keys()));
+        for (let key of Object.keys(intermediate_obj.vertices)) {
+            graph_obj.vertices[shuffled[key]] = intermediate_obj.vertices[key];
+        }
+        for (let obj of intermediate_obj.edges) {
+            graph_obj.edges.push({ v1: shuffled[obj.v1], v2: shuffled[obj.v2] });
+        }
     }
     // Now, add the string representation.
     let vertex_string = "";

@@ -44,7 +44,14 @@
             </v-col>
             <v-col md6 xs12>
                 <v-checkbox label="Tree" v-model="isTree"></v-checkbox>
-                <v-checkbox label="Connected" v-model="isConnected"></v-checkbox>
+                <v-row>
+                    <v-col>
+                        <v-text-field dense label="Components" v-model="graphComponents"></v-text-field>
+                    </v-col>
+                    <v-col>
+                        <v-btn @click="variableComponents()" color="primary">Variable Components</v-btn>
+                    </v-col>
+                </v-row>
                 <v-checkbox label="Weighted Vertices" v-model="isVertexWeighted"></v-checkbox>
                 <v-checkbox label="Weighted Edges" v-model="isEdgeWeighted"></v-checkbox>
             </v-col>
@@ -65,7 +72,7 @@ export default {
         graphVertices: 5,
         graphEdges: 7,
         isTree: false,
-        isConnected: true,
+        graphComponents: 4,
         isVertexWeighted: false,
         isEdgeWeighted: true,
         formatString: "NV NE\nV\nE",
@@ -84,7 +91,7 @@ export default {
             'graphVertices',
             'graphEdges',
             'isTree',
-            'isConnected',
+            'graphComponents',
             'isVertexWeighted',
             'isEdgeWeighted',
             'formatString',
@@ -107,6 +114,10 @@ export default {
         variableEdges() {
             this.$set(this.cur_obj, 'graphEdges', { element: { name: "Integer", component: Integer, options: ["Integer"] } });
             this.keys.push('graphEdges');
+        },
+        variableComponents() {
+            this.$set(this.cur_obj, 'graphComponents', { element: { name: "Integer", component: Integer, options: ["Integer"] } });
+            this.keys.push('graphComponents');
         }
     },
     watch: {
@@ -119,12 +130,12 @@ export default {
         isTree() {
             this.$set(this.cur_obj, 'isTree', this.isTree);
             if (this.isTree) {
-                this.isConnected = true;
+                this.graphComponents = 1;
                 this.graphEdges = "NV - 1";
             }
         },
-        isConnected() {
-            this.$set(this.cur_obj, 'isConnected', this.isConnected);
+        graphComponents() {
+            this.$set(this.cur_obj, 'graphComponents', this.graphComponents);
         },
         isVertexWeighted() {
             this.$set(this.cur_obj, 'isVertexWeighted', this.isVertexWeighted);
