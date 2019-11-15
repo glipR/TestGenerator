@@ -52,8 +52,24 @@
                         <v-btn @click="variableComponents()" color="primary">Variable Components</v-btn>
                     </v-col>
                 </v-row>
-                <v-checkbox label="Weighted Vertices" v-model="isVertexWeighted"></v-checkbox>
-                <v-checkbox label="Weighted Edges" v-model="isEdgeWeighted"></v-checkbox>
+                <v-expansion-panels accordion multiple>
+                    <v-expansion-panel>
+                        <v-expansion-panel-header>
+                            <v-checkbox label="Weighted Vertices" v-model="isVertexWeighted"></v-checkbox>
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                            Controls
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                    <v-expansion-panel>
+                        <v-expansion-panel-header>
+                            <v-checkbox label="Weighted Edges" v-model="isEdgeWeighted"></v-checkbox>
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                            Controls
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-expansion-panels>
             </v-col>
         </v-row>
     </v-container>
@@ -74,7 +90,7 @@ export default {
         isTree: false,
         graphComponents: 4,
         isVertexWeighted: false,
-        isEdgeWeighted: true,
+        isEdgeWeighted: false,
         formatString: "NV NE\nV\nE",
         vertexFormat: "v",
         vertexSeparator: "Space",
