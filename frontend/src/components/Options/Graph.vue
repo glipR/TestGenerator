@@ -7,22 +7,24 @@
         <v-row>
             <v-col md6 xs12>
                 <v-row>
-                    <v-row>
+                    <v-col md12 xs12><v-row>
                         <v-col>
                             <v-text-field dense label="Vertices" v-model="graphVertices"></v-text-field>
                         </v-col>
                         <v-col>
                             <v-btn @click="variableVertices()" color="primary">Variable Vertices</v-btn>
                         </v-col>
-                    </v-row>
-                    <v-row>
+                    </v-row></v-col>
+                </v-row>
+                <v-row>
+                    <v-col md12 xs12><v-row>
                         <v-col>
                             <v-text-field dense label="Edges" v-model="graphEdges"></v-text-field>
                         </v-col>
                         <v-col>
                             <v-btn @click="variableEdges()" color="primary">Variable Edges</v-btn>
                         </v-col>
-                    </v-row>
+                    </v-row></v-col>
                 </v-row>
                 <v-textarea label="Output Format" v-model="formatString"></v-textarea>
                 <v-row>
