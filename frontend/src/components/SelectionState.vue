@@ -26,7 +26,7 @@ export default {
             let results = [[object, 0, []]];
             for (let key of Object.keys(object)) {
                 /*eslint no-console: "off"*/
-                if (object[key].element) {
+                if (object[key] != null && object[key].element) {
                     for (let col of this.indentationsFromObject(object[key].element)) {
                         col[2].push(key);
                         results.push([col[0], col[1]+1, col[2]]);
