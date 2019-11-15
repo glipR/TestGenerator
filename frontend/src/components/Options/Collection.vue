@@ -24,6 +24,9 @@
                             <v-btn @click="numElements()" color="primary">Variable Elements</v-btn>
                         </v-col>
                     </v-row>
+                    <v-row>
+                        <v-col><v-text-field filled label="Element Separator" v-model="separator"></v-text-field></v-col>
+                    </v-row>
                 </v-col>
                 <v-col md6 xs12>
                     Element Type
@@ -68,7 +71,8 @@ export default {
         individualElements: false,
         numElements: 10,
         elementType: null,
-        elementTypeFake: null
+        elementTypeFake: null,
+        separator: "\n"
     }),
     created() {
         if (this.cur_obj.individualElements == undefined)
@@ -87,6 +91,10 @@ export default {
             this.$set(this.cur_obj, 'numElements', this.numElements);
         else
             this.numElements = this.cur_obj.numElements;
+        if (this.cur_obj.separator == undefined)
+            this.$set(this.cur_obj, 'separator', this.separator);
+        else
+            this.separator = this.cur_obj.separator;
     },
     watch: {
         individualElements() {
@@ -100,6 +108,9 @@ export default {
         },
         elementTypeFake() {
             this.$set(this.cur_obj, 'elementTypeFake', this.elementTypeFake);
+        },
+        separator() {
+            this.$set(this.cur_obj, 'separator', this.separator);
         }
     },
     methods: {
