@@ -17,6 +17,7 @@ import Integer from '../Options/Integer';
 import Float from '../Options/Float';
 import String from '../Options/String';
 import Graph from '../Options/Graph';
+import Collection from '../Options/Collection';
 import { serverBus } from '../../main';
 
 export default {
@@ -26,7 +27,7 @@ export default {
     },
     data: () => ({
         options: [
-            { name: "Collection" },
+            { name: "Collection", component: Collection },
             { name: "Integer", component: Integer },
             { name: "Float", component: Float },
             { name: "String", component: String },
