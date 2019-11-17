@@ -1,13 +1,14 @@
 export const generate = (obj) => {
     if (obj.element.name == "Integer") {
         return generateInteger(obj.element);
-    }
-    else if (obj.element.name == "Float") {
+    } else if (obj.element.name == "Float") {
         return generateFloat(obj.element);
     } else if (obj.element.name == "String") {
         return generateString(obj.element);
     } else if (obj.element.name == "Graph") {
         return generateGraph(obj.element);
+    } else if (obj.element.name == "Collection") {
+        return generateCollection(obj.element);
     }
     return obj;
 }
@@ -251,4 +252,37 @@ const generateGraph = (options) => {
     );
 
     return graph_obj;
+}
+
+const generateGroupNumbers = (indiv_options, group_options, amount) => {
+    let result = [];
+    for (let i=0; i<amount; i++) result.push(generateInteger(indiv_options));
+    if (group_options.increasing) { result.sort() }
+    return result;
+}
+
+const generateGroupFloats = (indiv_options, group_options, amount) => {
+    let result = [];
+    for (let i=0; i<amount; i++) result.push(generateFloat(indiv_options));
+    if (group_options.increasing) { result.sort() }
+    return result;
+}
+
+const generateCollection = (options) => {
+    if (options.individualElements) { return options; }
+    let results = [];
+    let num_elems = options.numElements;
+    if (typeof(num_elems) == "object") {
+        num_elems = generate(num_elems);
+    }
+    if (options.elementType.element.name == "Integer") {
+        results = generateGroupNumbers(options.elementType.element, {}, num_elems);
+    } else if (options.elementType.element.name == "Float") {
+        results = generateGroupFloats(options.elementType.element, {}, num_elems);
+    }
+    let string = "";
+    options.separator = options.separator.replace('\\t', '\t').replace('\\n', '\n');
+    for (let r of results) { string = string + r + options.separator }
+    string = string.substring(0, string.length - options.separator.length);
+    return { result: string, stats: { num_elems: num_elems } };
 }
