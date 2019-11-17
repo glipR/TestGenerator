@@ -29,9 +29,9 @@ const generateInteger = (options) => {
         }
         let primes = [];
         for (let i=0; i<options.upperBound; i++) if (sieve[i] && i >= options.lowerBound) primes.push(i);
-        return primes[Math.floor(Math.random() * primes.length)];
+        return { result: primes[Math.floor(Math.random() * primes.length)] };
     } else {
-        return Math.round(options.lowerBound - 0.5 + Math.random() * (options.upperBound - options.lowerBound + 1));
+        return { result: Math.round(options.lowerBound - 0.5 + Math.random() * (options.upperBound - options.lowerBound + 1)) };
     }
 }
 
@@ -39,7 +39,7 @@ const generateFloat = (options) => {
     let lower = Math.ceil(options.lowerBound * Math.pow(10, options.precision));
     let upper = Math.floor(options.upperBound * Math.pow(10, options.precision));
     let num = Math.round(lower - 0.5 + Math.random() * (upper - lower + 1));
-    return num / Math.pow(10, options.precision);
+    return { result: num / Math.pow(10, options.precision) };
 }
 
 const getAlphabet = (set_name) => {
@@ -77,7 +77,7 @@ const generateString = (options) => {
     }
     let result = "";
     for (let c of char_array) result = result + c;
-    return result;
+    return { result: result };
 }
 
 // Taken from https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
@@ -282,7 +282,7 @@ const generateCollection = (options) => {
     }
     let string = "";
     options.separator = options.separator.replace('\\t', '\t').replace('\\n', '\n');
-    for (let r of results) { string = string + r + options.separator }
+    for (let r of results) { string = string + r.result + options.separator }
     string = string.substring(0, string.length - options.separator.length);
-    return { result: string, stats: { num_elems: num_elems } };
+    return { result: string, stats: { num_elems: num_elems }, data: results };
 }
