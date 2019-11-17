@@ -9,7 +9,7 @@
                 <v-row>
                     <v-col md12 xs12><v-row>
                         <v-col>
-                            <v-text-field dense label="Vertices" v-model="graphVertices"></v-text-field>
+                            <v-text-field dense label="Vertices" v-model="graphVertices" type="number"></v-text-field>
                         </v-col>
                         <v-col>
                             <v-btn @click="variableVertices()" color="primary">Variable Vertices</v-btn>
@@ -19,7 +19,7 @@
                 <v-row>
                     <v-col md12 xs12><v-row>
                         <v-col>
-                            <v-text-field dense label="Edges" v-model="graphEdges"></v-text-field>
+                            <v-text-field dense label="Edges" v-model="graphEdges" type="number"></v-text-field>
                         </v-col>
                         <v-col>
                             <v-btn @click="variableEdges()" color="primary">Variable Edges</v-btn>

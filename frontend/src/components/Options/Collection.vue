@@ -18,10 +18,10 @@
                 <v-col md6 xs12>
                     <v-row>
                         <v-col>
-                            <v-text-field dense label="Number of Elements" v-model="numElements"></v-text-field>
+                            <v-text-field dense label="Number of Elements" v-model="numElements" type="number"></v-text-field>
                         </v-col>
                         <v-col>
-                            <v-btn @click="numElements()" color="primary">Variable Elements</v-btn>
+                            <v-btn @click="VariableElements()" color="primary">Variable Elements</v-btn>
                         </v-col>
                     </v-row>
                     <v-row>
@@ -40,6 +40,9 @@
                     </v-radio-group>
                 </v-col>
             </v-row>
+        </div>
+        <div v-if="integerSelected()">
+            Integer Options
         </div>
     </v-container>
 </v-card>
@@ -127,6 +130,12 @@ export default {
                     break;
                 }
             }
+        },
+        integerSelected() {
+            if (this.individualElements) {
+                for (let element of this.individualElements) { if (element.name == "Integer") return true; }
+                return false;
+            } return (this.elementType && this.elementType.element.name == "Integer");
         }
     }
 }
