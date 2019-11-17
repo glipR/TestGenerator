@@ -57,8 +57,9 @@ const getAlphabet = (set_name) => {
 const generateString = (options) => {
     let alph = Array.from(getAlphabet(options.charSet));
     let stringSize = options.stringSize;
+    /*eslint no-console: "off"*/
     if (typeof(stringSize) == "object") {
-        stringSize = generate(stringSize);
+        stringSize = generate(stringSize).result;
     } else {
         stringSize = parseInt(stringSize);
     }
@@ -129,13 +130,13 @@ const edgeToString = (options, info) => {
 const generateGraph = (options) => {
     let num_verts = options.graphVertices;
     if (typeof(num_verts) == "object") {
-        num_verts = generate(num_verts);
+        num_verts = generate(num_verts).result;
     } else {
         num_verts = parseInt(num_verts);
     }
     let num_edges = options.graphEdges;
     if (typeof(num_edges) == "object") {
-        num_edges = generate(num_edges);
+        num_edges = generate(num_edges).result;
     } else {
         num_edges = parseInt(num_edges);
     }
@@ -148,7 +149,7 @@ const generateGraph = (options) => {
         // Generate trees for each component, and then add edges among components.
         let num_comps = opts.graphComponents;
         if (typeof(num_comps) == "object") {
-            num_comps = generate(num_comps);
+            num_comps = generate(num_comps).result;
         } else {
             num_comps = parseInt(num_comps);
         }
@@ -273,7 +274,7 @@ const generateCollection = (options) => {
     let results = [];
     let num_elems = options.numElements;
     if (typeof(num_elems) == "object") {
-        num_elems = generate(num_elems);
+        num_elems = generate(num_elems).result;
     }
     if (options.elementType.element.name == "Integer") {
         results = generateGroupNumbers(options.elementType.element, {}, num_elems);
